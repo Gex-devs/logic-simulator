@@ -4,18 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic_simulator
+namespace Logic_simulator.Logic_Gates
 {
-    public class NotGate : ILogicComponent
+    public class XORGate : ILogicComponent
     {
-        private bool[] inputs = new bool[1];
+        private bool[] inputs = new bool[2];
         private bool[] outputs = new bool[1];
-
-        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
-        {
-            ComputeLogic();
-            other.SetInput(inputPin, outputs[outputPin]);
-        }
 
         public bool GetInput(int pin)
         {
@@ -33,9 +27,21 @@ namespace Logic_simulator
             inputs[pin] = value;
         }
 
+        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
+        {
+            ComputeLogic();
+            other.SetInput(inputPin, outputs[outputPin]);
+        }
+
         private void ComputeLogic()
         {
-            outputs[0] = !inputs[0];
+            if (inputs[0] != inputs[1])
+            {
+                outputs[0] = true;
+                return;
+            }
+            outputs[0] = false;
         }
+
     }
 }

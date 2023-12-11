@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic_simulator
+namespace Logic_simulator.Logic_Gates
 {
-    public class NotGate : ILogicComponent
+    public class ORGate : ILogicComponent
     {
-        private bool[] inputs = new bool[1];
-        private bool[] outputs = new bool[1];
+        private bool[] inputs = new bool[2];
+        private bool[] outputs = new bool[1]; // AndGate has a single output
 
         public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
         {
@@ -32,10 +32,19 @@ namespace Logic_simulator
         {
             inputs[pin] = value;
         }
-
+        
         private void ComputeLogic()
         {
-            outputs[0] = !inputs[0];
+            foreach (bool inputPin in inputs)
+            {
+                if (inputPin)
+                {
+                    outputs[0] = inputPin;
+                    return;
+                }
+            }
+
+            outputs[0] = false;
         }
     }
 }
