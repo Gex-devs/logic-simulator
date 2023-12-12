@@ -6,36 +6,17 @@ using System.Threading.Tasks;
 
 namespace Logic_simulator
 {
-    public class NotGate : ILogicComponent
+    public class NotGate : Gate
     {
-        private bool[] inputs = new bool[1];
-        private bool[] outputs = new bool[1];
-
-        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
-        {
-            ComputeLogic();
-            other.SetInput(inputPin, outputs[outputPin]);
+        private static int inputs = 1;
+        private static int outputs = 1;
+        public NotGate() : base(inputs, outputs) { 
+        
         }
 
-        public bool GetInput(int pin)
+        public override void ComputeLogic()
         {
-            return inputs[pin];
-        }
-
-        public bool GetOutput(int pin)
-        {
-            ComputeLogic();
-            return outputs[pin];
-        }
-
-        public void SetInput(int pin, bool value)
-        {
-            inputs[pin] = value;
-        }
-
-        private void ComputeLogic()
-        {
-            outputs[0] = !inputs[0];
+            SetOutput(0,!GetInput(0));
         }
     }
 }

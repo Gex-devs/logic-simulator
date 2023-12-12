@@ -6,45 +6,27 @@ using System.Threading.Tasks;
 
 namespace Logic_simulator.Logic_Gates
 {
-    public class ORGate : ILogicComponent
+    public class ORGate : Gate
     {
-        private bool[] inputs = new bool[2];
-        private bool[] outputs = new bool[1]; // AndGate has a single output
+        private static int inputs = 2;
+        private static int outputs = 1;
 
-        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
+        public ORGate() : base(inputs, outputs)
         {
-            ComputeLogic();
-            other.SetInput(inputPin, outputs[outputPin]);
+
         }
 
-        public bool GetInput(int pin)
+        public override void ComputeLogic()
         {
-            return inputs[pin];
-        }
-
-        public bool GetOutput(int pin)
-        {
-            ComputeLogic();
-            return outputs[pin];
-        }
-
-        public void SetInput(int pin, bool value)
-        {
-            inputs[pin] = value;
-        }
-        
-        private void ComputeLogic()
-        {
-            foreach (bool inputPin in inputs)
+            for (int i = 0; i < inputs; i++)
             {
-                if (inputPin)
+                if (GetInput(i))
                 {
-                    outputs[0] = inputPin;
+                    SetOutput(0, true);
                     return;
                 }
             }
-
-            outputs[0] = false;
+           SetOutput(0, false);
         }
     }
 }

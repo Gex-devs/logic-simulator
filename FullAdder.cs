@@ -1,27 +1,27 @@
-﻿using Logic_simulator.Logic_Gates;
-using Logic_simulator.CustomException;
+﻿using Logic_simulator.CustomException;
+using Logic_simulator.Logic_Gates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.NetworkInformation;
 
 namespace Logic_simulator
 {
-    public class HalfAdder : ILogicComponent
+    public class FullAdder : ILogicComponent
     {
-        private bool[] inputs = new bool[2];
+        private bool[] inputs = new bool[3];
         private bool[] outputs = new bool[2];
 
-        private XORGate XORgate;
-        private AndGate Andgate;
-        private List<int> connectedPins;
-        public HalfAdder()
+        private HalfAdder halfAdder1;
+        private HalfAdder halfAdder2;
+        private ORGate orGate;
+
+        public FullAdder()
         {
-            connectedPins = new List<int>();
-            XORgate = new XORGate();
-            Andgate = new AndGate();
+            halfAdder1 = new HalfAdder();
+            halfAdder2 = new HalfAdder();
+            orGate = new ORGate();
         }
 
         public bool GetInput(int pin)
@@ -63,36 +63,29 @@ namespace Logic_simulator
 
         public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
         {
-       
             if (outputPin >= outputs.Length)
             {
                 throw new PinOutOfReach();
             }
-
             ComputeLogic(); // Ensure output is computed before connecting
-
-            if (connectedPins.Contains(outputPin))
-            {
-                //throw new ConnectionAlreadyCreated();
-            }
-
-            connectedPins.Add(outputPin);
             other.SetInput(inputPin, outputs[outputPin]);
         }
 
         private void ComputeLogic()
         {
-            XORgate.SetInput(0, inputs[0]);
-            XORgate.SetInput(1, inputs[1]);
+            halfAdder1.SetInput(0, inputs[0]);
+            halfAdder1.SetInput(1, inputs[1]);
 
-            Andgate.SetInput(0, inputs[0]);
-            Andgate.SetInput(1, inputs[1]);
+            halfAdder1.ConnectOutput(0, halfAdder2, 0);
+            halfAdder2.SetInput(1, inputs[2]);
 
-            outputs[0] = XORgate.GetOutput(0);
-            outputs[1] = Andgate.GetOutput(0);
+            halfAdder1.ConnectOutput(1, orGate, 0);
+            halfAdder2.ConnectOutput(1, orGate, 1);
+
+            SetOutput(0, halfAdder2.GetOutput(0));
+            SetOutput(1, orGate.GetOutput(0));
+
         }
 
-
     }
-
 }

@@ -1,41 +1,38 @@
-﻿using Logic_simulator.Logic_Gates;
-using Logic_simulator.CustomException;
+﻿using Logic_simulator.CustomException;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.NetworkInformation;
 
 namespace Logic_simulator
 {
-    public class HalfAdder : ILogicComponent
+    public abstract class Gate : ILogicComponent
     {
-        private bool[] inputs = new bool[2];
-        private bool[] outputs = new bool[2];
+        private bool[] inputs;
+        private bool[] outputs;
+        List<int> connectedPins = new List<int>();
+        public abstract void ComputeLogic();
 
-        private XORGate XORgate;
-        private AndGate Andgate;
-        private List<int> connectedPins;
-        public HalfAdder()
+        public Gate(int numberOfInputs, int numberOfOutputs)
         {
-            connectedPins = new List<int>();
-            XORgate = new XORGate();
-            Andgate = new AndGate();
+            inputs = new bool[numberOfInputs];
+            outputs = new bool[numberOfOutputs];
         }
 
         public bool GetInput(int pin)
         {
-            if (pin >= inputs.Length)
+            if (pin < 0 || pin >= inputs.Length)
             {
                 throw new PinOutOfReach();
             }
+
             return inputs[pin];
         }
 
         public bool GetOutput(int pin)
         {
-            if (pin >= outputs.Length)
+            if (pin < 0 || pin >= inputs.Length)
             {
                 throw new PinOutOfReach();
             }
@@ -45,25 +42,26 @@ namespace Logic_simulator
 
         public void SetInput(int pin, bool value)
         {
-            if (pin >= inputs.Length)
+            if (pin < 0 || pin >= inputs.Length)
             {
                 throw new PinOutOfReach();
             }
+            
             inputs[pin] = value;
         }
-
         public void SetOutput(int pin, bool value)
         {
-            if (pin >= outputs.Length)
+            if (pin < 0 || pin >= inputs.Length)
             {
                 throw new PinOutOfReach();
             }
+
             outputs[pin] = value;
         }
 
         public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
         {
-       
+
             if (outputPin >= outputs.Length)
             {
                 throw new PinOutOfReach();
@@ -73,26 +71,13 @@ namespace Logic_simulator
 
             if (connectedPins.Contains(outputPin))
             {
-                //throw new ConnectionAlreadyCreated();
+                throw new ConnectionAlreadyCreated();
             }
 
             connectedPins.Add(outputPin);
             other.SetInput(inputPin, outputs[outputPin]);
         }
 
-        private void ComputeLogic()
-        {
-            XORgate.SetInput(0, inputs[0]);
-            XORgate.SetInput(1, inputs[1]);
-
-            Andgate.SetInput(0, inputs[0]);
-            Andgate.SetInput(1, inputs[1]);
-
-            outputs[0] = XORgate.GetOutput(0);
-            outputs[1] = Andgate.GetOutput(0);
-        }
-
-
+       
     }
-
 }

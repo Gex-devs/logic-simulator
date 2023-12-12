@@ -6,41 +6,27 @@ using System.Threading.Tasks;
 
 namespace Logic_simulator.Logic_Gates
 {
-    public class XORGate : ILogicComponent
+    public class XORGate : Gate
     {
-        private bool[] inputs = new bool[2];
-        private bool[] outputs = new bool[1];
+        private static int inputs = 2;
+        private static int outputs = 1;
 
-        public bool GetInput(int pin)
+        public XORGate() : base(inputs, outputs)
         {
-            return inputs[pin];
+
         }
 
-        public bool GetOutput(int pin)
+        public override void ComputeLogic()
         {
-            ComputeLogic();
-            return outputs[pin];
-        }
 
-        public void SetInput(int pin, bool value)
-        {
-            inputs[pin] = value;
-        }
-
-        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
-        {
-            ComputeLogic();
-            other.SetInput(inputPin, outputs[outputPin]);
-        }
-
-        private void ComputeLogic()
-        {
-            if (inputs[0] != inputs[1])
+            if (GetInput(0) != GetInput(1))
             {
-                outputs[0] = true;
-                return;
+                SetOutput(0, true);
             }
-            outputs[0] = false;
+            else
+            {
+                SetOutput(0, false);
+            }
         }
 
     }

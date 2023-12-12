@@ -1,36 +1,304 @@
 ﻿using Logic_simulator;
 using Logic_simulator.Logic_Gates;
+
 public class Program
 {
     public static void Main(string[] args)
     {
         /*
          What does it mean Produce a thruth table for all inputs and outputs?
-         Each of the gates should indirectly inherit ??
          */
-        HalfAdder halfAdder1 = new HalfAdder();
-        HalfAdder halfAdder2 = new HalfAdder();
-        ORGate orGate = new ORGate();
 
-        bool inputA = true;
-        bool inputB = true;
-        bool carryIn = false;
+        DemonstrateHalfAdder();
+        DemonstrateFullAdder();
+    }
 
-        halfAdder1.SetInput(0, inputA);
-        halfAdder1.SetInput(1, inputB);
 
-        halfAdder1.ConnectOutput(0, halfAdder2, 0);
-        halfAdder2.SetInput(1, carryIn);
 
-        halfAdder1.ConnectOutput(1, orGate, 0);
-        halfAdder2.ConnectOutput(1, orGate, 1);
+    private static void DemonstrateHalfAdder()
+    {
+        Console.WriteLine("Half Adder Demonstration");
+        HalfAdder halfAdder = new HalfAdder();
 
-        // Read the sum and carry outputs
-        bool sum = halfAdder2.GetOutput(0);
-        bool carryOut = orGate.GetOutput(0);
+        // 0 | 0 = 0 | 0
+        halfAdder.SetInput(0, false);
+        halfAdder.SetInput(1, false);
 
-        Console.WriteLine("Sum Output: " + sum);
-        Console.WriteLine("Carry Output: " + carryOut);
+        if (halfAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (halfAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 0 | 1 = 1 | 0
+        halfAdder.SetInput(0, false);
+        halfAdder.SetInput(1, true);
+
+        if (halfAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (halfAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 1 | 0 = 1 | 0
+        halfAdder.SetInput(0, true);
+        halfAdder.SetInput(1, false);
+
+        if (halfAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (halfAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+
+        // 1 | 1 = 0 | 1
+        halfAdder.SetInput(0, true);
+        halfAdder.SetInput(1, true);
+
+        if (halfAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (halfAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+    }
+    private static void DemonstrateFullAdder()
+    {
+        Console.WriteLine("Full Adder Demonstration");
+        FullAdder fullAdder = new FullAdder();
+
+        // 0 | 0 | 0 = 0 | 0
+        fullAdder.SetInput(0, false);
+        fullAdder.SetInput(1, false);
+        fullAdder.SetInput(2, false);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 0 | 0 | 1 = 1 | 0
+        fullAdder.SetInput(0, false);
+        fullAdder.SetInput(1, false);
+        fullAdder.SetInput(2, true);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 0 | 1 | 0 = 1 | 0
+        fullAdder.SetInput(0, false);
+        fullAdder.SetInput(1, true);
+        fullAdder.SetInput(2, false);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 0 | 1 | 1 = 0 | 1
+        fullAdder.SetInput(0, false);
+        fullAdder.SetInput(1, true);
+        fullAdder.SetInput(2, true);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 1 | 0 | 0 = 1 | 0
+        fullAdder.SetInput(0, true);
+        fullAdder.SetInput(1, false);
+        fullAdder.SetInput(2, false);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 1 | 0 | 1 = 0 | 1
+        fullAdder.SetInput(0, true);
+        fullAdder.SetInput(1, false);
+        fullAdder.SetInput(2, true);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 1 | 1 | 0 = 0 | 1
+        fullAdder.SetInput(0, true);
+        fullAdder.SetInput(1, true);
+        fullAdder.SetInput(2, false);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
+        // 1 | 1 | 1 = 1 | 1
+        fullAdder.SetInput(0, true);
+        fullAdder.SetInput(1, true);
+        fullAdder.SetInput(2, true);
+
+        if (fullAdder.GetOutput(0))
+        {
+            Console.Write("T|");
+        }
+        else
+        {
+            Console.Write("F|");
+        }
+
+        if (fullAdder.GetOutput(1))
+        {
+            Console.Write("T\n");
+        }
+        else
+        {
+            Console.Write("F\n");
+        }
+
     }
 
 }
