@@ -28,5 +28,10 @@ namespace Logic_simulator.Logic_Gates
             }
            SetOutput(0, false);
         }
+
+        public override string GetTruthTable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

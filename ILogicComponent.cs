@@ -16,6 +16,8 @@ namespace Logic_simulator
         void SetInput(int pin, bool value);
         // Set the Output State
         void SetOutput(int pin, bool value);
+        // Update the pins and outputs
+        void Update(int pin);
         // Connect an output of this component to an input of another component.
         // Allows multiple connections from the same output to other output pins
         void ConnectOutput(int outputPin, ILogicComponent other, int inputPin);

@@ -9,89 +9,35 @@ using System.Net.NetworkInformation;
 
 namespace Logic_simulator
 {
-    public class HalfAdder : ILogicComponent
+    public class HalfAdder : Gate
     {
-        private bool[] inputs = new bool[2];
-        private bool[] outputs = new bool[2];
+        private static int inputs = 2;
+        private static int outputs = 2;
 
         private XORGate XORgate;
         private AndGate Andgate;
-        private List<int> connectedPins;
-        public HalfAdder()
+        public HalfAdder() : base(inputs, outputs)
         {
-            connectedPins = new List<int>();
             XORgate = new XORGate();
             Andgate = new AndGate();
         }
 
-        public bool GetInput(int pin)
+        public override void ComputeLogic()
         {
-            if (pin >= inputs.Length)
-            {
-                throw new PinOutOfReach();
-            }
-            return inputs[pin];
+            XORgate.SetInput(0, GetInput(0));
+            XORgate.SetInput(1, GetInput(1));
+
+            Andgate.SetInput(0, GetInput(0));
+            Andgate.SetInput(1, GetInput(1));
+
+            SetOutput(0, XORgate.GetOutput(0));
+            SetOutput(1, Andgate.GetOutput(0));
         }
 
-        public bool GetOutput(int pin)
+        public override string GetTruthTable()
         {
-            if (pin >= outputs.Length)
-            {
-                throw new PinOutOfReach();
-            }
-            ComputeLogic();
-            return outputs[pin];
+            throw new NotImplementedException();
         }
-
-        public void SetInput(int pin, bool value)
-        {
-            if (pin >= inputs.Length)
-            {
-                throw new PinOutOfReach();
-            }
-            inputs[pin] = value;
-        }
-
-        public void SetOutput(int pin, bool value)
-        {
-            if (pin >= outputs.Length)
-            {
-                throw new PinOutOfReach();
-            }
-            outputs[pin] = value;
-        }
-
-        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
-        {
-       
-            if (outputPin >= outputs.Length)
-            {
-                throw new PinOutOfReach();
-            }
-
-            ComputeLogic(); // Ensure output is computed before connecting
-
-            if (connectedPins.Contains(outputPin))
-            {
-                //throw new ConnectionAlreadyCreated();
-            }
-
-            connectedPins.Add(outputPin);
-            other.SetInput(inputPin, outputs[outputPin]);
-        }
-
-        private void ComputeLogic()
-        {
-            XORgate.SetInput(0, inputs[0]);
-            XORgate.SetInput(1, inputs[1]);
-
-            Andgate.SetInput(0, inputs[0]);
-            Andgate.SetInput(1, inputs[1]);
-
-            outputs[0] = XORgate.GetOutput(0);
-            outputs[1] = Andgate.GetOutput(0);
-        }
-
 
     }
 

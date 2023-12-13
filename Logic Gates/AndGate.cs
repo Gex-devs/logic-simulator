@@ -15,6 +15,7 @@ namespace Logic_simulator.Logic_Gates
         }
         public override void ComputeLogic()
         {
+          
             for (int i = 0; i < inputs; i++)
             {
                 if (!GetInput(i))
@@ -24,6 +25,11 @@ namespace Logic_simulator.Logic_Gates
                 }
             }
             SetOutput(0, true);
+        }
+
+        public override string GetTruthTable()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -18,5 +18,10 @@ namespace Logic_simulator
         {
             SetOutput(0,!GetInput(0));
         }
+
+        public override string GetTruthTable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

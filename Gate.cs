@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace Logic_simulator
     {
         private bool[] inputs;
         private bool[] outputs;
-        List<int> connectedPins = new List<int>();
+        List<Tuple<int,int,ILogicComponent>> Connections = new List<Tuple<int, int, ILogicComponent>>();
         public abstract void ComputeLogic();
+        public abstract string GetTruthTable();
 
         public Gate(int numberOfInputs, int numberOfOutputs)
         {
@@ -39,7 +41,7 @@ namespace Logic_simulator
             ComputeLogic();
             return outputs[pin];
         }
-
+        
         public void SetInput(int pin, bool value)
         {
             if (pin < 0 || pin >= inputs.Length)
@@ -48,6 +50,7 @@ namespace Logic_simulator
             }
             
             inputs[pin] = value;
+            Update(pin);
         }
         public void SetOutput(int pin, bool value)
         {
@@ -63,21 +66,23 @@ namespace Logic_simulator
         {
 
             if (outputPin >= outputs.Length)
-            {
+            {   
                 throw new PinOutOfReach();
             }
 
             ComputeLogic(); // Ensure output is computed before connecting
-
-            if (connectedPins.Contains(outputPin))
-            {
-                throw new ConnectionAlreadyCreated();
-            }
-
-            connectedPins.Add(outputPin);
             other.SetInput(inputPin, outputs[outputPin]);
+            Tuple<int,int,ILogicComponent> connection = Tuple.Create(inputPin, outputPin, other);
+            Connections.Add(connection);
         }
 
-       
+        public void Update(int pin)
+        {
+            foreach(var connection in Connections)
+            {
+                connection.Item3.SetInput(pin, GetOutput(connection.Item2));
+            }
+        }
+
     }
 }
