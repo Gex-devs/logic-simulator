@@ -5,24 +5,24 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        /*
-         What does it mean Produce a thruth table for all inputs and outputs?
-         */
 
-        //DemonstrateHalfAdder();
-        //DemonstrateFullAdder();
-        DemonstrateOutPutConnection();
+        //HalfAdderTest();
+        //FullAdderTest();
+        ConnectionTest();
     }
-    private static void DemonstrateOutPutConnection()
+    private static void ConnectionTest()
     {
         AndGate and = new AndGate();
         NotGate not = new NotGate();
+        ORGate oRGate = new ORGate();
 
         Console.WriteLine("expected result False, True");
         and.SetInput(0, false);
         and.SetInput(1, true);
         Console.WriteLine(and.GetOutput(0));
         and.ConnectOutput(0, not, 0);
+        and.ConnectOutput(0, oRGate, 0);
+        and.ConnectOutput(0, oRGate, 1);
         Console.WriteLine(not.GetOutput(0));
         Console.WriteLine("-----");
 
@@ -39,7 +39,7 @@ public class Program
         Console.WriteLine("-----");
 
     }
-    private static void DemonstrateHalfAdder()
+    private static void HalfAdderTest()
     {
         Console.WriteLine("Half Adder Demonstration");
         HalfAdder halfAdder = new HalfAdder();
@@ -83,7 +83,7 @@ public class Program
         Console.WriteLine("-----");
 
     }
-    private static void DemonstrateFullAdder()
+    private static void FullAdderTest()
     {
         Console.WriteLine("Full Adder Demonstration");
         FullAdder fullAdder = new FullAdder();

@@ -9,19 +9,28 @@ using System.Net.NetworkInformation;
 
 namespace Logic_simulator
 {
+    /// <summary>
+    /// Simulates Half adder logic gate
+    /// </summary>
     public class HalfAdder : Gate
     {
-        private static int inputs = 2;
-        private static int outputs = 2;
+        private static readonly int numInputs = 2;
+        private static readonly int numOutputs = 2;
 
         private XORGate XORgate;
         private AndGate Andgate;
-        public HalfAdder() : base(inputs, outputs)
+        /// <summary>
+        /// Intializes the gate and sends the number of inputs and outputs of 
+        /// the gate
+        /// </summary>
+        public HalfAdder() : base(numInputs, numOutputs)
         {
             XORgate = new XORGate();
             Andgate = new AndGate();
         }
-
+        /// <summary>
+        /// Computes the logic gate
+        /// </summary>
         public override void ComputeLogic()
         {
             XORgate.SetInput(0, GetInput(0));
@@ -33,7 +42,10 @@ namespace Logic_simulator
             SetOutput(0, XORgate.GetOutput(0));
             SetOutput(1, Andgate.GetOutput(0));
         }
-
+        /// <summary>
+        /// Using the half adders compute logic. it creates a truth table
+        /// </summary>
+        /// <returns>truth table</returns>
         public override string GetTruthTable()
         {
             throw new NotImplementedException();

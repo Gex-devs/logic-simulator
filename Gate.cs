@@ -8,80 +8,138 @@ using System.Threading.Tasks;
 
 namespace Logic_simulator
 {
+    /// <summary>
+    /// Parent class for all logic gates
+    /// </summary>
     public abstract class Gate : ILogicComponent
     {
         private bool[] inputs;
         private bool[] outputs;
-        List<Tuple<int,int,ILogicComponent>> Connections = new List<Tuple<int, int, ILogicComponent>>();
+        List<Connection> connections;
+        /// <summary>
+        /// Compute logic for the component
+        /// </summary>
         public abstract void ComputeLogic();
+        /// <summary>
+        /// Creates truth table for the component
+        /// </summary>
+        /// <returns>truth table</returns>
         public abstract string GetTruthTable();
-
+        /// <summary>
+        /// Intializes the connection List and 
+        /// the number of inputs and outputs for the child Gate
+        /// </summary>
+        /// <param name="numberOfInputs"> the number of inputs for the gate</param>
+        /// <param name="numberOfOutputs">the umber of outputs for the gate</param>
         public Gate(int numberOfInputs, int numberOfOutputs)
         {
+            connections = new List<Connection>();
+
             inputs = new bool[numberOfInputs];
             outputs = new bool[numberOfOutputs];
         }
-
+        /// <summary>
+        /// Get an input pin of the gate
+        /// </summary>
+        /// <param name="pin">input pin to retrieve</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidInputPin">The input pin doesn't exist</exception>
         public bool GetInput(int pin)
         {
             if (pin < 0 || pin >= inputs.Length)
             {
-                throw new PinOutOfReach();
+                throw new InvalidInputPin();
             }
-
             return inputs[pin];
         }
-
+        /// <summary>
+        /// Get an Output pin of the gate
+        /// </summary>
+        /// <param name="pin">Output pin to retrieve</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOutputPin">The Output pin doesn't exist</exception>
         public bool GetOutput(int pin)
         {
             if (pin < 0 || pin >= inputs.Length)
             {
-                throw new PinOutOfReach();
+                throw new InvalidOutputPin();
             }
             ComputeLogic();
             return outputs[pin];
         }
-        
+        /// <summary>
+        /// Set value of an input pin to True or False
+        /// </summary>
+        /// <param name="pin">input pin to set</param>
+        /// <param name="value">The boolean value to set to the pin</param>
+        /// <exception cref="InvalidInputPin">The Input pin doesn't Exist</exception>
         public void SetInput(int pin, bool value)
         {
             if (pin < 0 || pin >= inputs.Length)
             {
-                throw new PinOutOfReach();
+                throw new InvalidInputPin();
             }
-            
+
             inputs[pin] = value;
-            Update(pin);
+            UpdateAllConnections(); // Output changes when input changes. Update all connections with the new output value.
         }
+        /// <summary>
+        /// Set value of an Output pin to True or False
+        /// </summary>
+        /// <param name="pin">Output pin to set</param>
+        /// <param name="value">The boolean value to set to the pin</param>
+        /// <exception cref="InvalidOutputPin">The Output pin doesn't Exist</exception>
         public void SetOutput(int pin, bool value)
         {
             if (pin < 0 || pin >= inputs.Length)
             {
-                throw new PinOutOfReach();
+                throw new InvalidOutputPin();
             }
-
             outputs[pin] = value;
         }
-
+        /// <summary>
+        /// Connect an output of this component to an input of another component.
+        /// </summary>
+        /// <param name="outputPin">Outpin to get the value from</param>
+        /// <param name="other">The component to connect to</param>
+        /// <param name="inputPin">the components input pin to set to</param>
+        /// <exception cref="InvalidOutputPin">The input pin doesn't exist</exception>
+        /// <exception cref="ConnectionAlreadyCreated">Connection already exists</exception>
         public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
         {
-
             if (outputPin >= outputs.Length)
-            {   
-                throw new PinOutOfReach();
+            {
+                throw new InvalidOutputPin();
+            }
+
+            foreach (Connection connection in connections)
+            {
+                if (connection.GetConnectedOutputPin() == outputPin && connection.GetConnectedPin() == inputPin && connection.GetConnectedGate() == other)
+                {
+                    throw new ConnectionAlreadyCreated();
+                }
             }
 
             ComputeLogic(); // Ensure output is computed before connecting
             other.SetInput(inputPin, outputs[outputPin]);
-            Tuple<int,int,ILogicComponent> connection = Tuple.Create(inputPin, outputPin, other);
-            Connections.Add(connection);
-        }
 
-        public void Update(int pin)
+            // Create connection instance and add to the list
+            Connection newConnection = new Connection(inputPin, outputPin, other);
+            connections.Add(newConnection);
+        }
+        /// <summary>
+        /// Updates all connection of the current components with the latest output value
+        /// </summary>
+        private void UpdateAllConnections()
         {
-            foreach(var connection in Connections)
+            if (connections.Count > 0) // Update only if there's one or more connection
             {
-                connection.Item3.SetInput(pin, GetOutput(connection.Item2));
+                foreach (Connection connection in connections)
+                {
+                    connection.Update(GetOutput(connection.GetConnectedOutputPin())); // Update with the Latest output
+                }
             }
+
         }
 
     }

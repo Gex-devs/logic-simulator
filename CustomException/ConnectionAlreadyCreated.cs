@@ -12,7 +12,6 @@ namespace Logic_simulator.CustomException
         public ConnectionAlreadyCreated() : base(defaultMessage)
         {
 
-
         }
 
         public ConnectionAlreadyCreated(string message) : base(message)
