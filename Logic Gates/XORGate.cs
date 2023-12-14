@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ *	Description: Simulates XOR gate
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator.Logic_Gates
 {
-    /// <summary>
-    /// Simulate the XOR gate logic
-    /// </summary>
     public class XORGate : Gate
     {
         private static readonly int numInputs = 2;
@@ -25,7 +29,7 @@ namespace Logic_simulator.Logic_Gates
         /// </summary>
         public override void ComputeLogic()
         {
-            if (GetInput(0) != GetInput(1))
+            if (GetInput(0) != GetInput(1)) // if they are different it means they are odd.
             {
                 SetOutput(0, true);
             }
@@ -33,14 +37,6 @@ namespace Logic_simulator.Logic_Gates
             {
                 SetOutput(0, false);
             }
-        }
-        /// <summary>
-        /// Creates a truth table using the XOR Gate
-        /// </summary>
-        /// <returns>truth table</returns>
-        public override string GetTruthTable()
-        {
-            throw new NotImplementedException();
         }
     }
 }

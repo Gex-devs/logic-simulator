@@ -4,6 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ *	Description: General logic gate exception 
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator.CustomException
 {
     public class LogicGatesException : Exception

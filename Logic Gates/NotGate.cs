@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ *	Description: Simulates NOT logic gate 
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator
 {
-    /// <summary>
-    /// Simulates the NOT gate logic
-    /// </summary>
     public class NotGate : Gate
     {
         private static readonly int numInputs = 1;
@@ -24,7 +28,7 @@ namespace Logic_simulator
         /// </summary>
         public override void ComputeLogic()
         {
-            SetOutput(0,!GetInput(0));
+            SetOutput(0,!GetInput(0)); 
         }
         /// <summary>
         /// Creates a truth table using the Not Gate logic
@@ -32,7 +36,19 @@ namespace Logic_simulator
         /// <returns></returns>
         public override string GetTruthTable()
         {
-            throw new NotImplementedException();
+            StringBuilder truthTable = new StringBuilder();
+            truthTable.AppendLine("Input A\t  | Output");
+            truthTable.AppendLine("---------------------------");
+
+            bool InputA = true;
+            this.SetInput(0, InputA);
+            truthTable.AppendLine($"{InputA}\t  | {this.GetOutput(0)}");
+
+            InputA = false;
+            this.SetInput(0, InputA);
+            truthTable.AppendLine($"{InputA}\t  | {this.GetOutput(0)}");
+
+            return truthTable.ToString();
         }
     }
 }

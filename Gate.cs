@@ -6,25 +6,27 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ *	Description: Base Class gate to simulate logic gates
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator
 {
-    /// <summary>
-    /// Parent class for all logic gates
-    /// </summary>
     public abstract class Gate : ILogicComponent
     {
         private bool[] inputs;
         private bool[] outputs;
         List<Connection> connections;
+
         /// <summary>
         /// Compute logic for the component
         /// </summary>
         public abstract void ComputeLogic();
-        /// <summary>
-        /// Creates truth table for the component
-        /// </summary>
-        /// <returns>truth table</returns>
-        public abstract string GetTruthTable();
+
+       
         /// <summary>
         /// Intializes the connection List and 
         /// the number of inputs and outputs for the child Gate
@@ -38,6 +40,7 @@ namespace Logic_simulator
             inputs = new bool[numberOfInputs];
             outputs = new bool[numberOfOutputs];
         }
+
         /// <summary>
         /// Get an input pin of the gate
         /// </summary>
@@ -46,12 +49,13 @@ namespace Logic_simulator
         /// <exception cref="InvalidInputPin">The input pin doesn't exist</exception>
         public bool GetInput(int pin)
         {
-            if (pin < 0 || pin >= inputs.Length)
+            if ((pin < 0) || (pin >= inputs.Length))
             {
                 throw new InvalidInputPin();
             }
             return inputs[pin];
         }
+
         /// <summary>
         /// Get an Output pin of the gate
         /// </summary>
@@ -60,13 +64,14 @@ namespace Logic_simulator
         /// <exception cref="InvalidOutputPin">The Output pin doesn't exist</exception>
         public bool GetOutput(int pin)
         {
-            if (pin < 0 || pin >= inputs.Length)
+            if ((pin < 0) || (pin >= inputs.Length))
             {
                 throw new InvalidOutputPin();
             }
             ComputeLogic();
             return outputs[pin];
         }
+
         /// <summary>
         /// Set value of an input pin to True or False
         /// </summary>
@@ -75,14 +80,14 @@ namespace Logic_simulator
         /// <exception cref="InvalidInputPin">The Input pin doesn't Exist</exception>
         public void SetInput(int pin, bool value)
         {
-            if (pin < 0 || pin >= inputs.Length)
+            if ((pin < 0) || (pin >= inputs.Length))
             {
                 throw new InvalidInputPin();
             }
-
             inputs[pin] = value;
             UpdateAllConnections(); // Output changes when input changes. Update all connections with the new output value.
         }
+
         /// <summary>
         /// Set value of an Output pin to True or False
         /// </summary>
@@ -91,12 +96,13 @@ namespace Logic_simulator
         /// <exception cref="InvalidOutputPin">The Output pin doesn't Exist</exception>
         public void SetOutput(int pin, bool value)
         {
-            if (pin < 0 || pin >= inputs.Length)
+            if ((pin < 0) || (pin >= inputs.Length))
             {
                 throw new InvalidOutputPin();
             }
             outputs[pin] = value;
         }
+
         /// <summary>
         /// Connect an output of this component to an input of another component.
         /// </summary>
@@ -107,7 +113,7 @@ namespace Logic_simulator
         /// <exception cref="ConnectionAlreadyCreated">Connection already exists</exception>
         public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
         {
-            if (outputPin >= outputs.Length)
+            if ((outputPin < 0) || (outputPin >= outputs.Length))
             {
                 throw new InvalidOutputPin();
             }
@@ -127,6 +133,7 @@ namespace Logic_simulator
             Connection newConnection = new Connection(inputPin, outputPin, other);
             connections.Add(newConnection);
         }
+
         /// <summary>
         /// Updates all connection of the current components with the latest output value
         /// </summary>
@@ -136,10 +143,46 @@ namespace Logic_simulator
             {
                 foreach (Connection connection in connections)
                 {
-                    connection.Update(GetOutput(connection.GetConnectedOutputPin())); // Update with the Latest output
+                    connection.Update(GetOutput(connection.GetConnectedOutputPin())); // Update with the Latest output from connected pin
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Creates truth table for the Common logic gates
+        /// </summary>
+        /// <returns>truth table</returns>
+        public virtual string GetTruthTable() {
+            StringBuilder truthTable = new StringBuilder();
+            truthTable.AppendLine("Input A | Input B | Output");
+            truthTable.AppendLine("---------------------------");
+
+            bool InputA = false;
+            bool InputB = false;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+
+            InputA = false;
+            InputB = true;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+
+            InputA = true;
+            InputB = false;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+
+            InputA = true;
+            InputB = true;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+
+            return truthTable.ToString();
         }
 
     }

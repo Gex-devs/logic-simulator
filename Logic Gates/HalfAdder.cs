@@ -7,11 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 
+/*
+ *	Description: Simulates HALF adder gate
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator
 {
-    /// <summary>
-    /// Simulates Half adder logic gate
-    /// </summary>
     public class HalfAdder : Gate
     {
         private static readonly int numInputs = 2;
@@ -19,6 +23,7 @@ namespace Logic_simulator
 
         private XORGate XORgate;
         private AndGate Andgate;
+
         /// <summary>
         /// Intializes the gate and sends the number of inputs and outputs of 
         /// the gate
@@ -28,6 +33,7 @@ namespace Logic_simulator
             XORgate = new XORGate();
             Andgate = new AndGate();
         }
+
         /// <summary>
         /// Computes the logic gate
         /// </summary>
@@ -42,13 +48,42 @@ namespace Logic_simulator
             SetOutput(0, XORgate.GetOutput(0));
             SetOutput(1, Andgate.GetOutput(0));
         }
+
         /// <summary>
         /// Using the half adders compute logic. it creates a truth table
         /// </summary>
         /// <returns>truth table</returns>
         public override string GetTruthTable()
         {
-            throw new NotImplementedException();
+            StringBuilder truthTable = new StringBuilder();
+            truthTable.AppendLine("Input A | Input B | OutputA | OutputB");
+            truthTable.AppendLine("---------------------------");
+
+            bool InputA = false;
+            bool InputB = false;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t  | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
+
+            InputA = false;
+            InputB = true;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t  | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
+
+            InputA = true;
+            InputB = false;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
+
+            InputA = true;
+            InputB = true;
+            this.SetInput(0, InputA);
+            this.SetInput(1, InputB);
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
+
+            return truthTable.ToString();
         }
 
     }

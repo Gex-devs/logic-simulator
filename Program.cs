@@ -8,8 +8,119 @@ public class Program
 
         //HalfAdderTest();
         //FullAdderTest();
-        ConnectionTest();
+        //ConnectionTest();
+
+        //AndGateTest();
+        //NOTGateTest();
+        //XORGateTest();
+        //ORGateTest();
+
+
     }
+
+    private static void ORGateTest()
+    {
+        ORGate oR = new ORGate();
+
+        oR.SetInput(0, false);
+        oR.SetInput(1, false);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(oR.GetOutput(0));
+        Console.WriteLine("-----");
+
+        oR.SetInput(0, true);
+        oR.SetInput(1, false);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(oR.GetOutput(0));
+        Console.WriteLine("-----");
+
+        oR.SetInput(0, false);
+        oR.SetInput(1, true);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(oR.GetOutput(0));
+        Console.WriteLine("-----");
+
+        oR.SetInput(0, true);
+        oR.SetInput(1, true);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(oR.GetOutput(0));
+        Console.WriteLine("-----");
+
+    }
+
+    private static void XORGateTest()
+    {
+        XORGate XoR = new XORGate();
+
+        XoR.SetInput(0, false);
+        XoR.SetInput(1, false);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(XoR.GetOutput(0));
+        Console.WriteLine("-----");
+
+        XoR.SetInput(0, true);
+        XoR.SetInput(1, false);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(XoR.GetOutput(0));
+        Console.WriteLine("-----");
+
+        XoR.SetInput(0, false);
+        XoR.SetInput(1, true);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(XoR.GetOutput(0));
+        Console.WriteLine("-----");
+
+        XoR.SetInput(0, true);
+        XoR.SetInput(1, true);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(XoR.GetOutput(0));
+        Console.WriteLine("-----");
+    }
+
+    private static void NOTGateTest()
+    {
+        NotGate NOT = new NotGate();
+
+        NOT.SetInput(0, false);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(NOT.GetOutput(0));
+        Console.WriteLine("-----");
+
+        NOT.SetInput(0, true);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(NOT.GetOutput(0));
+        Console.WriteLine("-----");
+    }
+
+    private static void AndGateTest()
+    {
+        AndGate AND = new AndGate();
+
+        AND.SetInput(0, false);
+        AND.SetInput(1, false);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(AND.GetOutput(0));
+        Console.WriteLine("-----");
+
+        AND .SetInput(0, true);
+        AND .SetInput(1, false);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(AND.GetOutput(0));
+        Console.WriteLine("-----");
+
+        AND.SetInput(0, false);
+        AND.SetInput(1, true);
+        Console.WriteLine("expected result False");
+        Console.WriteLine(AND.GetOutput(0));
+        Console.WriteLine("-----");
+
+        AND.SetInput(0, true);
+        AND.SetInput(1, true);
+        Console.WriteLine("expected result True");
+        Console.WriteLine(AND.GetOutput(0));
+        Console.WriteLine("-----");
+    }
+
     private static void ConnectionTest()
     {
         AndGate and = new AndGate();

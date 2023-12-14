@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ *	Description: Simulates ORGate
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator.Logic_Gates
 {
-    /// <summary>
-    /// Simulates the OR gate logic
-    /// </summary>
     public class ORGate : Gate
     {
         private static readonly int numInputs = 2;
@@ -33,16 +37,8 @@ namespace Logic_simulator.Logic_Gates
                     return;
                 }
             }
+
            SetOutput(0, false);
-        }
-        /// <summary>
-        /// Creates a truth using the OR Gate logic
-        /// </summary>
-        /// <returns>Truth table</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override string GetTruthTable()
-        {
-            throw new NotImplementedException();
         }
     }
 }
