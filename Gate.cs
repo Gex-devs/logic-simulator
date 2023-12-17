@@ -10,6 +10,7 @@ using System.Threading.Tasks;
  *	Description: Base Class gate to simulate logic gates
  *
  *	Author : Gedewon Jerene, I519796@fhict.nl
+ *	Student number: 519796
  * 	Date: 14 December 2023
  */
 
@@ -19,20 +20,19 @@ namespace Logic_simulator
     {
         private bool[] inputs;
         private bool[] outputs;
-        List<Connection> connections;
+        private List<Connection> connections;
 
         /// <summary>
-        /// Compute logic for the component
+        /// Abstract method to compute logic for the component. To be implemented by child classes.
         /// </summary>
         public abstract void ComputeLogic();
 
-       
+
         /// <summary>
-        /// Intializes the connection List and 
-        /// the number of inputs and outputs for the child Gate
+        /// Initializes the Gate with specified numbers of inputs and outputs.
         /// </summary>
-        /// <param name="numberOfInputs"> the number of inputs for the gate</param>
-        /// <param name="numberOfOutputs">the umber of outputs for the gate</param>
+        /// <param name="numberOfInputs">The number of inputs for the gate.</param>
+        /// <param name="numberOfOutputs">The number of outputs for the gate.</param>
         public Gate(int numberOfInputs, int numberOfOutputs)
         {
             connections = new List<Connection>();
@@ -64,7 +64,7 @@ namespace Logic_simulator
         /// <exception cref="InvalidOutputPin">The Output pin doesn't exist</exception>
         public bool GetOutput(int pin)
         {
-            if ((pin < 0) || (pin >= inputs.Length))
+            if ((pin < 0) || (pin >= outputs.Length))
             {
                 throw new InvalidOutputPin();
             }
@@ -96,7 +96,7 @@ namespace Logic_simulator
         /// <exception cref="InvalidOutputPin">The Output pin doesn't Exist</exception>
         public void SetOutput(int pin, bool value)
         {
-            if ((pin < 0) || (pin >= inputs.Length))
+            if ((pin < 0) || (pin >= outputs.Length))
             {
                 throw new InvalidOutputPin();
             }
@@ -111,8 +111,14 @@ namespace Logic_simulator
         /// <param name="inputPin">the components input pin to set to</param>
         /// <exception cref="InvalidOutputPin">The input pin doesn't exist</exception>
         /// <exception cref="ConnectionAlreadyCreated">Connection already exists</exception>
+        /// <exception cref="LogicGatesException">Connection object is empty</exception>
         public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
         {
+            if(other == null) // Check for null objects
+            {
+                throw new LogicGatesException();
+            }
+
             if ((outputPin < 0) || (outputPin >= outputs.Length))
             {
                 throw new InvalidOutputPin();
@@ -120,7 +126,7 @@ namespace Logic_simulator
 
             foreach (Connection connection in connections)
             {
-                if (connection.GetConnectedOutputPin() == outputPin && connection.GetConnectedPin() == inputPin && connection.GetConnectedGate() == other)
+                if (connection.GetConnectedOutputPin() == outputPin && connection.GetConnectedInputPin() == inputPin && connection.GetConnectedGate() == other)
                 {
                     throw new ConnectionAlreadyCreated();
                 }
@@ -146,41 +152,40 @@ namespace Logic_simulator
                     connection.Update(GetOutput(connection.GetConnectedOutputPin())); // Update with the Latest output from connected pin
                 }
             }
-
         }
 
         /// <summary>
-        /// Creates truth table for the Common logic gates
+        /// Creates truth table for the Common logic gates with two inputs and one output
         /// </summary>
-        /// <returns>truth table</returns>
+        /// <returns>Generated truth table</returns>
         public virtual string GetTruthTable() {
             StringBuilder truthTable = new StringBuilder();
             truthTable.AppendLine("Input A | Input B | Output");
             truthTable.AppendLine("---------------------------");
 
-            bool InputA = false;
-            bool InputB = false;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+            bool inputA = false;
+            bool inputB = false;
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t   | {this.GetOutput(0)}");
 
-            InputA = false;
-            InputB = true;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+            inputA = false;
+            inputB = true;
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t   | {this.GetOutput(0)}");
 
-            InputA = true;
-            InputB = false;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+            inputA = true;
+            inputB = false;
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t   | {this.GetOutput(0)}");
 
-            InputA = true;
-            InputB = true;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)}");
+            inputA = true;
+            inputB = true;
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t   | {this.GetOutput(0)}");
 
             return truthTable.ToString();
         }

@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Logic_simulator.CustomException;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 /*
- *	Description: Connection class to store connected pins data
+ *	Description: The Connection class manages the linkage between different logic gates within a system
  *
  *	Author : Gedewon Jerene, I519796@fhict.nl
+ *	Student number: 519796
  * 	Date: 14 December 2023
  */
 
 namespace Logic_simulator
 {
+    /// <summary>
+    /// Manages the connection between different logic gates within a system by encapsulating connection attributes such as input and output pins and the connected gate.
+    /// </summary>
     public class Connection
     {
         private int connectedInputPin;
@@ -20,53 +25,59 @@ namespace Logic_simulator
         private ILogicComponent connectedGate;
 
         /// <summary>
-        /// Stores the connection attributes to the class
+        /// Initializes a new instance of the <see cref="Connection"/> class with specified connection attributes.
         /// </summary>
-        /// <param name="connectedPin"> input pin of the current gatess</param>
-        /// <param name="outputPin">the output pin of the external connected gate</param>
-        /// <param name="connectedGate">the gate to connect to</param>
-        public Connection(int connectedPin, int outputPin, ILogicComponent connectedGate)
+        /// <param name="connectedInputPin">The input pin of the current gate.</param>
+        /// <param name="connectedOutputPin">The output pin of the externally connected gate.</param>
+        /// <param name="connectedGate">The gate to which the current gate is connected.</param>
+        /// <exception cref="LogicGatesException">Thrown when the connectedGate gate is null.</exception>
+        public Connection(int connectedInputPin, int connectedOutputPin, ILogicComponent connectedGate)
         {
-            connectedOutputPin = outputPin;
-            connectedInputPin = connectedPin;   
+            if (connectedGate == null)
+            {
+                throw new LogicGatesException("Cannot create a connection with a null gate.");
+            }
+
+            this.connectedOutputPin = connectedOutputPin;
+            this.connectedInputPin = connectedInputPin;
             this.connectedGate = connectedGate;
         }
 
         /// <summary>
-        /// Gets the connected output pin
+        /// Gets the connected output pin of the externally connected gate.
         /// </summary>
-        /// <returns>connected output pin</returns>
+        /// <returns>The connected output pin.</returns>
         public int GetConnectedOutputPin()
         {
             return connectedOutputPin;
         }
 
         /// <summary>
-        /// Gets the connected input pin
+        /// Gets the connected input pin of the current gate.
         /// </summary>
-        /// <returns>connected input pin</returns>
-        public int GetConnectedPin()
+        /// <returns>The connected input pin.</returns>
+        public int GetConnectedInputPin()
         {
             return connectedInputPin;
         }
 
         /// <summary>
-        /// Gets the connected gate
+        /// Gets the gate to which the current gate is connected.
         /// </summary>
-        /// <returns>the connected gate</returns>
+        /// <returns>The connected gate.</returns>
         public ILogicComponent GetConnectedGate()
         {
             return connectedGate;
         }
 
         /// <summary>
-        /// Updates the value of the connected pin in the gate
+        /// Updates the value of the connected pin in the connected gate.
         /// </summary>
-        /// <param name="value">boolean value of to update the pin with</param>
+        /// <param name="value">The boolean value to update the pin with.</param>
         public void Update(bool value)
         {
             connectedGate.SetInput(connectedInputPin, value);
         }
-
     }
+
 }

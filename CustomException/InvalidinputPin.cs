@@ -8,6 +8,7 @@ using System.Threading.Tasks;
  *	Description: logic gate exception for invlaid input pin 
  *
  *	Author : Gedewon Jerene, I519796@fhict.nl
+ *	Student number: 519796
  * 	Date: 14 December 2023
  */
 

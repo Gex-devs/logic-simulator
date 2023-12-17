@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
- *	Description: 
+ *	Description: Simulates FullAdder logic gate
  *
  *	Author : Gedewon Jerene, I519796@fhict.nl
+ *	Student number: 519796
  * 	Date: 14 December 2023
  */
 
@@ -22,28 +23,27 @@ namespace Logic_simulator
 
         private HalfAdder halfAdder1;
         private HalfAdder halfAdder2;
-        private ORGate orGate;  
+        private ORGate orGate;
 
         /// <summary>
-        /// Intlizes the two HALF adder gates and the OR gate 
-        /// and creates the neccary conneections to perform the
-        /// full adder logic
+        /// Initializes a FullAdder by creating two HalfAdders and an ORGate 
+        /// and establishing the necessary connections to perform full adder logic.
         /// </summary>
         public FullAdder() : base(numInputs, numOutputs)
         {
-            // Intlaizes all the gates
+            // Initialize the gates
             halfAdder1 = new HalfAdder();
             halfAdder2 = new HalfAdder();
             orGate = new ORGate();
 
-            // Connect all the appropriate pins
+            // Establish connections between gates
             halfAdder1.ConnectOutput(0, halfAdder2, 0);
             halfAdder1.ConnectOutput(1, orGate, 0);
             halfAdder2.ConnectOutput(1, orGate, 1);
         }
 
         /// <summary>
-        /// Computes the Full adder logic
+        /// Computes the FullAdder logic by setting inputs and reading outputs from connected gates.
         /// </summary>
         public override void ComputeLogic()
         {
@@ -57,82 +57,32 @@ namespace Logic_simulator
         }
 
         /// <summary>
-        /// Creates a truth table with Full adder logic
+        /// Generates a truth table for the FullAdder logic with different input combinations.
         /// </summary>
-        /// <returns>returns the truth table for full adder</returns>
+        /// <returns>A string containing the truth table for the FullAdder.</returns>
         public override string GetTruthTable()
         {
+            // Create a StringBuilder to store the truth table
             StringBuilder truthTable = new StringBuilder();
             truthTable.AppendLine("Input A | Input B | Input C | OutputA | OutputB");
             truthTable.AppendLine("----------------------------------------------");
 
-            bool InputA = false;
-            bool InputB = false;
-            bool InputC = false;
+            // Iterate through different input combinations and record outputs
+            for (int i = 0; i < 8; i++)
+            {
+                bool inputA = (i & 0b100) != 0;
+                bool inputB = (i & 0b010) != 0;
+                bool inputC = (i & 0b001) != 0;
 
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
+                this.SetInput(0, inputA);
+                this.SetInput(1, inputB);
+                this.SetInput(2, inputC);
 
-            InputA = false;
-            InputB = false;
-            InputC = true;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
-
-            InputA = false;
-            InputB = true;
-            InputC = false;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
-
-            InputA = false;
-            InputB = true;
-            InputC = true;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t   | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
-
-            InputA = true;
-            InputB = false;
-            InputC = false;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t  | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
-
-            InputA = true;
-            InputB = false;
-            InputC = true;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t  | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
-
-            InputA = true;
-            InputB = true;
-            InputC = false;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t  | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
-
-            InputA = true;
-            InputB = true;
-            InputC = true;
-            this.SetInput(0, InputA);
-            this.SetInput(1, InputB);
-            this.SetInput(2, InputC);
-            truthTable.AppendLine($"{InputA}\t  | {InputB}\t  | {InputC}\t | {this.GetOutput(0)}\t  | {this.GetOutput(1)}");
+                truthTable.AppendLine($"{Convert.ToByte(inputA)}\t   | {Convert.ToByte(inputB)}\t  | {Convert.ToByte(inputC)}\t | {Convert.ToByte(this.GetOutput(0))}\t  | {Convert.ToByte(this.GetOutput(1))}");
+            }
 
             return truthTable.ToString();
         }
-
     }
+
 }

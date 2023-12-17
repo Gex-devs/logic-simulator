@@ -5,7 +5,6 @@ public class Program
 {
     public static void Main(string[] args)
     {
-
         //HalfAdderTest();
         //FullAdderTest();
         //ConnectionTest();
@@ -14,8 +13,6 @@ public class Program
         //NOTGateTest();
         //XORGateTest();
         //ORGateTest();
-
-
     }
 
     private static void ORGateTest()

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
  *	Description: Exception for when attempting to connect the same gate multiple times 
  *
  *	Author : Gedewon Jerene, I519796@fhict.nl
+ *	Student number: 519796
  * 	Date: 14 December 2023
  */
 
