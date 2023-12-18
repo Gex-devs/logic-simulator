@@ -988,7 +988,7 @@
       </meta>
       <abstract-items />
       <sub-models />
-      <diagram type="uml-class" id="p7479c95e26e44c69b1ccb0d0c006b3de_428122358" name="ClassDiagram1" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-284,403">
+      <diagram type="uml-class" id="p7479c95e26e44c69b1ccb0d0c006b3de_428122358" name="ClassDiagram1" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-11,152">
         <style>
           <background-color index="1" color="#FFFFFFFF" />
           <background-color index="2" color="#FFFFFFFF" />
@@ -1599,7 +1599,7 @@
           </item>
           <item id="9ee71723a8d94b55bfc4a71b6ebd8666" cid="AB013" type="activation-bar" name="ExecutionOccurrence13" owner="2dab1cea53914003a21879f0054fce77" creator="" creation-date="12/12/2023 17:41:36" visibility="undefined" />
           <item id="6d300f2fb23b4d5e910f63e6975adea0" cid="SM014" type="sequence-action" name="Message14" creator="" creation-date="12/12/2023 17:39:02" from="727ad77de9e14ac19c2c2e4e8c0966ab" to="727ad77de9e14ac19c2c2e4e8c0966ab" visibility="package">
-            <sequence-action type="call" message="" is-asynchronous="false" operation-ref="o454507a07c5a4714abd0efaefe486475830" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="ComputeLogic()" is-asynchronous="false" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1724,7 +1724,7 @@
             </layout>
           </item>
           <item id="6d300f2fb23b4d5e910f63e6975adea0" iid="175a335f33d948b19dd480fa27c44616" creation-date="12/12/2023 17:39:02" order-index="13" type="relation">
-            <layout message-x="607" message-y="286" line-style="oblique" lock-start-point="true" lock-end-point="true" start-absolute-lock="true" end-absolute-lock="true" lock-to-fields="false" auto-path="" x1="511" y1="269" x2="511" y2="308" start-border-pos="0.29" end-border-pos="0.42000000000000004" start-local-pos="12" end-local-pos="51" name-position="46,-2">
+            <layout message-x="648" message-y="286" message-width="144" line-style="oblique" lock-start-point="true" lock-end-point="true" start-absolute-lock="true" end-absolute-lock="true" lock-to-fields="false" auto-path="" x1="511" y1="269" x2="511" y2="308" start-border-pos="0.29" end-border-pos="0.42000000000000004" start-local-pos="12" end-local-pos="51" name-position="87,-2" name-width="144">
               <points>
                 <point x="511" y="269" />
                 <point x="561" y="269" />

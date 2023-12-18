@@ -67,19 +67,85 @@ namespace Logic_simulator
             truthTable.AppendLine("Input A | Input B | Input C | OutputA | OutputB");
             truthTable.AppendLine("----------------------------------------------");
 
-            // Iterate through different input combinations and record outputs
-            for (int i = 0; i < 8; i++)
-            {
-                bool inputA = (i & 0b100) != 0;
-                bool inputB = (i & 0b010) != 0;
-                bool inputC = (i & 0b001) != 0;
+            bool inputA = false;
+            bool inputB = false;
+            bool inputC = false;
 
-                this.SetInput(0, inputA);
-                this.SetInput(1, inputB);
-                this.SetInput(2, inputC);
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
 
-                truthTable.AppendLine($"{Convert.ToByte(inputA)}\t   | {Convert.ToByte(inputB)}\t  | {Convert.ToByte(inputC)}\t | {Convert.ToByte(this.GetOutput(0))}\t  | {Convert.ToByte(this.GetOutput(1))}");
-            }
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = false;
+            inputB = false;
+            inputC = true;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = false;
+            inputB = true;
+            inputC = false;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = false;
+            inputB = true;
+            inputC = true;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = true;
+            inputB = false;
+            inputC = false;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = true;
+            inputB = false;
+            inputC = true;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = true;
+            inputB = true;
+            inputC = false;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
+
+            inputA = true;
+            inputB = true;
+            inputC = true;
+
+            this.SetInput(0, inputA);
+            this.SetInput(1, inputB);
+            this.SetInput(2, inputC);
+
+            truthTable.AppendLine($"{inputA}\t   | {inputB}\t  | {inputC}\t | {GetOutput(0)}\t  | {GetOutput(1)}");
 
             return truthTable.ToString();
         }
