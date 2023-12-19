@@ -47,6 +47,8 @@ namespace Logic_simulator
             andGate.SetInput(1, GetInput(1));
 
             SetOutput(0, xorGate.GetOutput(0));
+
+
             SetOutput(1, andGate.GetOutput(0));
         }
 
@@ -64,25 +66,25 @@ namespace Logic_simulator
             bool InputB = false;
             this.SetInput(0, InputA);
             this.SetInput(1, InputB);
-            truthTable.AppendLine($"{Convert.ToByte(InputA)}\t  | {Convert.ToByte(InputB)}\t   | {Convert.ToByte(this.GetOutput(0))} | {Convert.ToByte(this.GetOutput(1))}");
+            truthTable.AppendLine($"{InputA}\t  | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
 
             InputA = false;
             InputB = true;
             this.SetInput(0, InputA);
             this.SetInput(1, InputB);
-            truthTable.AppendLine($"{Convert.ToByte(InputA)}\t  | {Convert.ToByte(InputB)}\t   | {Convert.ToByte(this.GetOutput(0))} | {Convert.ToByte(this.GetOutput(1))}");
+            truthTable.AppendLine($"{InputA}\t  | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
 
             InputA = true;
             InputB = false;
             this.SetInput(0, InputA);
             this.SetInput(1, InputB);
-            truthTable.AppendLine($"{Convert.ToByte(InputA)}\t   | {Convert.ToByte(InputB)}\t   | {Convert.ToByte(this.GetOutput(0))} | {Convert.ToByte(this.GetOutput(1))}");
+            truthTable.AppendLine($"{InputA}\t   | {InputB}\t   | {this.GetOutput(0)} | {this.GetOutput(1)}");
 
             InputA = true;
             InputB = true;
             this.SetInput(0, InputA);
             this.SetInput(1, InputB);
-            truthTable.AppendLine($"{Convert.ToByte(InputA)}\t   | {Convert.ToByte(InputB)}\t   | {Convert.ToByte(this.GetOutput(0))} | {Convert.ToByte(this.GetOutput(1))}");
+            truthTable.AppendLine($"{InputA} \t   |  {InputB} \t   |  {this.GetOutput(0)}  |  {this.GetOutput(1)}");
 
             return truthTable.ToString();
         }
