@@ -20,7 +20,8 @@ namespace Logic_simulator
         private static readonly int numOutputs = 1;
 
         /// <summary>
-        /// Initializes a NotGate with a single input and output.
+        /// Initializes a NotGate class. passes number of input and output to base class
+        /// constructors method
         /// </summary>
         public NotGate() : base(numInputs, numOutputs) { }
 

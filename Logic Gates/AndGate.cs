@@ -20,7 +20,8 @@ namespace Logic_simulator.Logic_Gates
         private static readonly int numOutputs = 1;
 
         /// <summary>
-        /// Initializes an instance of the AndGate class with a specific number of inputs and outputs.
+        /// Initializes an instance of the AndGate class. passes number of input and output to base class
+        /// constructors method
         /// </summary>
         public AndGate() : base(numInputs, numOutputs)
         {

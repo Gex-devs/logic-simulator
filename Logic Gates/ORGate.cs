@@ -20,7 +20,8 @@ namespace Logic_simulator.Logic_Gates
         private static readonly int numOutputs = 1;
 
         /// <summary>
-        /// Initializes an ORGate with two inputs and one output.
+        /// Initializes an ORGate class. passes number of input and output to base class
+        /// constructors method
         /// </summary>
         public ORGate() : base(numInputs, numOutputs)
         {
