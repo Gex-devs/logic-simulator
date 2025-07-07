@@ -4,33 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ *	Description: Simulates NOT logic gate 
+ *
+ *	Author : Gedewon Jerene, I519796@fhict.nl
+ *	Student number: 519796
+ * 	Date: 14 December 2023
+ */
+
 namespace Logic_simulator
 {
-    public class NotGate : ILogicComponent
+    public class NotGate : Gate
     {
-        public NotGate() { 
-        
-        }
-        
-        public void ConnectOutput(int outputPin, ILogicComponent other, int inputPin)
+        private static readonly int numInputs = 1;
+        private static readonly int numOutputs = 1;
+
+        /// <summary>
+        /// Initializes a NotGate class. passes number of input and output to base class
+        /// constructors method
+        /// </summary>
+        public NotGate() : base(numInputs, numOutputs) { }
+
+        /// <summary>
+        /// Computes the logic for the NOT gate by inverting the input.
+        /// </summary>
+        public override void ComputeLogic()
         {
-            other.SetInput(inputPin, true);
-            throw new NotImplementedException();
+            SetOutput(0, !GetInput(0));
         }
 
-        public bool GetInput(int pin)
+        /// <summary>
+        /// Generates a truth table using the NOT Gate logic.
+        /// </summary>
+        /// <returns>A string containing the truth table for the NOT Gate.</returns>
+        public override string GetTruthTable()
         {
-            throw new NotImplementedException();
-        }
+            StringBuilder truthTable = new StringBuilder();
+            truthTable.AppendLine("Input A\t  | Output");
+            truthTable.AppendLine("---------------------------");
 
-        public bool GetOutput(int pin)
-        {
-            throw new NotImplementedException();
-        }
+            bool InputA = true;
+            this.SetInput(0, InputA);
+            truthTable.AppendLine($"{InputA}\t  | {this.GetOutput(0)}");
 
-        public void SetInput(int pin, bool value)
-        {
-            throw new NotImplementedException();
+            InputA = false;
+            this.SetInput(0, InputA);
+            truthTable.AppendLine($"{InputA}\t  | {this.GetOutput(0)}");
+
+            return truthTable.ToString();
         }
     }
+
 }
